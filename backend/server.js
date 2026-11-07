@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 
 const express = require("express");
@@ -31,18 +30,15 @@ app.get("/api/protected-test", protect, (req, res) => {
     });
 });
 
-// Connect MongoDB Atlas
-mongoose.connect(process.env.MONGO_URI)
+// Connect MongoDB and start server
+mongoose.connect("mongodb://127.0.0.1:27017/EventSphere")
     .then(() => {
-        console.log("MongoDB Atlas Connected Successfully");
+        console.log("MongoDB Connected Successfully");
 
-        const PORT = process.env.PORT || 5000;
-
-        app.listen(PORT, "0.0.0.0", () => {
-            console.log(`Server running on port ${PORT}`);
+        app.listen(5000, () => {
+            console.log("Server running on port 5000");
         });
     })
     .catch(error => {
-        console.error("MongoDB Connection Error:", error.message);
-        process.exit(1);
+        console.log("MongoDB Error:", error.message);
     });
